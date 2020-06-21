@@ -1,16 +1,14 @@
 package org.example.rest;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.mdc.MDCExecutorService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PreDestroy;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.example.concurrent.CompletableFutures.executeSync;
+import static org.example.mdc.MDCExecutorService.threadFactory;
 
 
 @RestController
@@ -19,9 +17,9 @@ public class Controller {
     private final AtomicInteger counter = new AtomicInteger(0);
     /*   private ExecutorService executorService = Executors.newFixedThreadPool(10, runnable ->
                new Thread("Thread-" + counter.getAndIncrement() + "--" + Controller.class.getName()));*/
-//    private ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory("MyThreadPool"));
+    private ExecutorService executorService = Executors.newFixedThreadPool(10, threadFactory("MyThreadPool"));
 
-    private final MDCExecutorService executorService = new MDCExecutorService(10, "MyThreadPool");
+//    private final MDCExecutorService executorService = new MDCExecutorService(10, "MyThreadPool");
 
 
     @GetMapping("/url")
@@ -35,13 +33,14 @@ public class Controller {
 
 
 //            CompletableFuture<Void> result = executorService.run(UUID.randomUUID().toString(), () -> log.info("GET Request"));
-            CompletableFuture<Void> result = executorService.run(UUID.randomUUID().toString(), () -> {
-                for (int i = 0; i < 20; i++) {
+           /* CompletableFuture<Void> result =*/
+            executorService.submit ( () -> {
+                /*for (int i = 0; i < 20; i++) {*/
                     log.info("GET Request");
-                }
+//                }
                 throw new RuntimeException("Test error");
-            });
-            Void voidResult = executeSync(result);
+            },null);
+//            Void voidResult = executeSync(result);
 
             System.out.println("System output");
         } catch (Exception e) {
@@ -50,10 +49,10 @@ public class Controller {
         return "Hello " + counter.getAndIncrement();
     }
 
-
+/*
     @PreDestroy
     public void destroy() {
         log.info("Destroy method");
         executorService.destroy();
-    }
+    }*/
 }

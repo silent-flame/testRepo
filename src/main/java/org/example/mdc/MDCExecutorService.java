@@ -71,7 +71,7 @@ public class MDCExecutorService {
         }
     }
 
-    private static ThreadFactory threadFactory(String poolName) {
+    public static ThreadFactory threadFactory(String poolName) {
         return new DefaultThreadFactory(poolName);
     }
 
