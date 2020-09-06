@@ -31,4 +31,5 @@ echo "$RELEASE_VERSION" > $PROPERTY_FILE
 echo "RELEASE $RELEASE_VERSION"
 git commit -a -m "RELEASE-$RELEASE_VERSION"
 git tag "release/$RELEASE_VERSION"
+git push origin
 git push origin --tags
