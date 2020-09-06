@@ -29,6 +29,7 @@ echo $PATCH_VERSION
 echo "------------------"
 RELEASE_VERSION=$(printf "D-%02d.%03d.%02d" $MAJOR_VERSION $MINOR_VERSION $PATCH_VERSION)
 git checkout -b "release/$RELEASE_VERSION"
+rm $PROPERTY_FILE
 echo "$RELEASE_VERSION" >> $PROPERTY_FILE
 echo "RELEASE $RELEASE_VERSION"
 git commit -a -m "RELEASE-$RELEASE_VERSION"
