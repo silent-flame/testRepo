@@ -2,7 +2,7 @@
 ##var1="val1"
 ##var2="val2"
 ##export -p > test.txt
-if [[ $# -eq 0 ]]
+if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
     exit
