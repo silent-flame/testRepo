@@ -28,6 +28,17 @@ case $RELEASE_TYPE in
      PATCH_VERSION=$((PATCH_VERSION + 1))
      ;;
 esac
+#case $RELEASE_TYPE in
+#   "major" )
+#     MAJOR_VERSION=$((MAJOR_VERSION + 1))
+#     ;;
+#   "minor" )
+#     MINOR_VERSION=$((MINOR_VERSION + 1))
+#     ;;
+#   "patch" )
+#     PATCH_VERSION=$((PATCH_VERSION + 1))
+#     ;;
+#esac
 echo $MAJOR_VERSION
 echo $MINOR_VERSION
 echo $PATCH_VERSION
